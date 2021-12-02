@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 class CreateOrUpdateRequest(BaseModel):
     """Login request"""
-    nickname: str = Field(description="User's nickname", min_length=3, max_length=127)
+    username: str = Field(description="Unique username", min_length=3, max_length=127)
     lang: str = Field(description="User's language", min_length=2, max_length=2)
 
     def __init__(self, **data):

@@ -30,5 +30,5 @@ class Profile(MongoModel):  # pylint: disable=too-few-public-methods
     """Profile model
     """
     owner: OID
-    nickname: str
+    username: str
     lang: str

@@ -63,7 +63,13 @@ def get(owner_id: ObjectId = Depends(get_current_user)):
 
 @app.post('/profile/create')
 def create(req: CreateOrUpdateRequest, owner_id: ObjectId = Depends(get_current_user)):
-    pass
+    profile = profiles.find_one({'owner': owner_id})
+    if profile is not None:
+        raise HTTPException(status_code=409, detail="You have already a profile")
+
+    profile = Profile(owner=owner_id, **req.dict())
+    profile.id = profiles.insert_one(profile.db()).inserted_id
+    return profile
 
 
 @app.put('/profile/update')

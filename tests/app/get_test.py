@@ -1,4 +1,4 @@
-"""Tests for GET request"""
+"""Tests for get request"""
 from bson import ObjectId
 
 from app.db import Profile
@@ -8,7 +8,7 @@ from tests.app.conftest import profiles, get_detail
 def test__get_profile_ok(client, headers, user_id):
     """Should get profile by using owner ID"""
     profiles.find_one.return_value = {
-        '_id': ObjectId(), 'owner': user_id, 'lang': 'de', 'nickname': 'nick'
+        '_id': ObjectId(), 'owner': user_id, 'lang': 'de', 'username': 'nick'
     }
     resp = client.get('/profile/get/', headers=headers)
 
@@ -17,7 +17,7 @@ def test__get_profile_ok(client, headers, user_id):
 
     profile = Profile.parse_raw(resp.content)
     assert profile.lang == 'de'
-    assert profile.nickname == 'nick'
+    assert profile.username == 'nick'
 
 
 def test__get_profile_not_found(client, headers):
