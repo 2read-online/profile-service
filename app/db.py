@@ -1,7 +1,7 @@
 """Module for working with MongoDB"""
 import logging
 
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.errors import OperationFailure
@@ -19,7 +19,7 @@ def get_profile_collection():
     profiles: Collection = db.profiles
 
     try:
-        profiles.create_index({'owner': 1, 'nickname': 1}, unique=True)
+        profiles.create_index([('owner', ASCENDING), ('nickname', ASCENDING)], unique=True)
     except OperationFailure:
         logger.warning('Owner index already created')
     return profiles
