@@ -10,21 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Update pip
-        run: pip install -U pip
+      - name: Build
+        run: docker build --build-arg REQUEREMENTS=requirements/test.txt -t test-image .
 
-      - name: Install modules
-        run: pip install -r requirements/test.txt
+      - name: Pylint
+        run: docker run -v ${PWD}:/service test-image pylint tests app
 
-      - name: Lint app
-        run: PYTHONPATH=. pylint ./app
-
-      - name: Lint tests
-        run: PYTHONPATH=. pylint ./tests
-
-      - name: Run Tests
-        run: PYTHONPATH=. pytest tests
-
+      - name: Tests
+        run: docker run -v ${PWD}:/service test-image pytest tests
 
   deploy:
     runs-on: ubuntu-latest
