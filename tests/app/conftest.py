@@ -20,8 +20,8 @@ def _mock_profiles(mocker):
 
 
 @pytest.fixture(name='client')
-def _make_client(mock_profiles):    # pylint: disable=unused-argument
-    from app.main import app    # pylint: disable=import-outside-toplevel
+def _make_client(mock_profiles):  # pylint: disable=unused-argument
+    from app.main import app  # pylint: disable=import-outside-toplevel
     return TestClient(app)
 
 
@@ -45,9 +45,10 @@ def get_detail(content: str) -> str:
     """Parse json and get detail"""
     return json.loads(content)['detail']
 
+
 @pytest.fixture(name='valid_request')
 def _make_valid_request() -> dict:
     return {
         'lang': 'en',
-        'username': 'user_0'
+        'username': 'user_01'
     }
