@@ -44,3 +44,10 @@ def _make_headers(token: str) -> Dict[str, str]:
 def get_detail(content: str) -> str:
     """Parse json and get detail"""
     return json.loads(content)['detail']
+
+@pytest.fixture(name='valid_request')
+def _make_valid_request() -> dict:
+    return {
+        'lang': 'en',
+        'username': 'user_0'
+    }

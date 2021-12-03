@@ -54,17 +54,19 @@ def get_current_user(req: Request) -> ObjectId:
 def get(owner_id: ObjectId = Depends(get_current_user)):
     """Get profile of current user
     """
-    profile = profiles.find_one({'owner': owner_id})
-    if not profile:
+    profile_db = profiles.find_one({'owner': owner_id})
+    if not profile_db:
         raise HTTPException(status_code=404, detail="Profile not found")
 
-    return Profile.from_db(profile)
+    return Profile.from_db(profile_db)
 
 
 @app.post('/profile/create')
 def create(req: CreateOrUpdateRequest, owner_id: ObjectId = Depends(get_current_user)):
-    profile = profiles.find_one({'owner': owner_id})
-    if profile is not None:
+    """Create a new profile
+    """
+    profile_db = profiles.find_one({'owner': owner_id})
+    if profile_db is not None:
         raise HTTPException(status_code=409, detail="You have already a profile")
 
     profile = Profile(owner=owner_id, **req.dict())
@@ -74,4 +76,11 @@ def create(req: CreateOrUpdateRequest, owner_id: ObjectId = Depends(get_current_
 
 @app.put('/profile/update')
 def update(req: CreateOrUpdateRequest, owner_id: ObjectId = Depends(get_current_user)):
-    pass
+    """Update a profile"""
+    profile_db = profiles.find_one({'owner': owner_id})
+    if not profile_db:
+        raise HTTPException(status_code=404, detail="Profile not found")
+
+    profile_db.update(req.dict())
+    profiles.replace_one({'owner': owner_id}, profile_db)
+    return Profile.from_db(profile_db)

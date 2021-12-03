@@ -1,7 +1,6 @@
 """Module for working with MongoDB"""
 import logging
 
-from pydantic import EmailStr, Field
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database

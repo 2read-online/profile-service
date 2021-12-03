@@ -1,19 +1,10 @@
 """Tests for create request"""
 from unittest.mock import Mock
 
-import pytest
 from bson import ObjectId
 
 from app.db import Profile
 from tests.app.conftest import get_detail, profiles
-
-
-@pytest.fixture(name='valid_request')
-def _make_valid_request() -> dict:
-    return {
-        'lang': 'en',
-        'username': 'user_01'
-    }
 
 
 def test__create_profile_ok(client, valid_request: dict, user_id: ObjectId, headers: dict):
@@ -30,8 +21,10 @@ def test__create_profile_ok(client, valid_request: dict, user_id: ObjectId, head
     profiles.insert_one.assert_called_with(valid_request | {'owner': user_id})
 
     assert resp.status_code == 200
-    assert Profile.parse_raw(resp.content).dict() == {'id': insert_result.inserted_id, 'owner': user_id,
-                                                      'username': 'user_01', 'lang': 'en'}
+    assert Profile.parse_raw(resp.content).dict() == {'id': insert_result.inserted_id,
+                                                      'owner': user_id,
+                                                      'username': 'user_01',
+                                                      'lang': 'en'}
 
 
 def test__create_profile_already_exist(client, valid_request: dict, headers: dict):
