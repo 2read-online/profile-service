@@ -24,7 +24,7 @@ def test__create_profile_ok(client, valid_request: dict, user_id: ObjectId, head
     assert Profile.parse_raw(resp.content).dict() == {'id': insert_result.inserted_id,
                                                       'owner': user_id,
                                                       'username': 'user_01',
-                                                      'lang': 'en'}
+                                                      'lang': 'deu'}
 
 
 def test__create_profile_already_exist(client, valid_request: dict, headers: dict):

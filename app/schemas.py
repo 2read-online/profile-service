@@ -44,5 +44,5 @@ class CreateOrUpdateRequest(BaseModel):
         try:
             _ = SUPPORTED_LANGUAGES.index(self.lang)
         except ValueError:
-            logger.warning('Language %s is not supported. Use "en"', self.lang)
-            self.lang = 'en'
+            logger.warning('Language %s is not supported. Use "eng"', self.lang)
+            self.lang = 'eng'

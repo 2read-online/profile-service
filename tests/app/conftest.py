@@ -49,6 +49,6 @@ def get_detail(content: str) -> str:
 @pytest.fixture(name='valid_request')
 def _make_valid_request() -> dict:
     return {
-        'lang': 'en',
+        'lang': 'deu',
         'username': 'user_01'
     }
