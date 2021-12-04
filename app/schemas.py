@@ -4,30 +4,30 @@ import logging
 from pydantic import BaseModel, Field
 
 SUPPORTED_LANGUAGES = [
-    'bg',
-    'cs',
-    'da',
-    'de',
-    'el',
-    'en',
-    'es',
-    'et',
-    'fi',
-    'fr',
-    'hu',
-    'it',
-    'js',
-    'lt',
-    'lv',
-    'nl',
-    'pl',
-    'pt',
-    'ro',
-    'ru',
-    'sk',
-    'sl',
-    'sv',
-    'zh'
+    'bul',
+    'ces',
+    'dan',
+    'deu',
+    'ell',
+    'eng',
+    'spa',
+    'est',
+    'fin',
+    'fra',
+    'hun',
+    'ita',
+    'jpn',
+    'lit',
+    'lav',
+    'nld',
+    'pol',
+    'por',
+    'ron',
+    'rus',
+    'slk',
+    'slv',
+    'swe',
+    'zho',
 ]
 
 logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 class CreateOrUpdateRequest(BaseModel):
     """Login request"""
     username: str = Field(description="Unique username", min_length=3, max_length=127)
-    lang: str = Field(description="User's language", min_length=2, max_length=2)
+    lang: str = Field(description="User's language", min_length=3, max_length=3)
 
     def __init__(self, **data):
         super().__init__(**data)
